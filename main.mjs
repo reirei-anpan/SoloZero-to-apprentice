@@ -5,6 +5,8 @@ import cron from "node-cron";
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent,
   ],
 });
 
@@ -28,14 +30,14 @@ async function sendScheduledMessage() {
     // ボタンを作成
     const button = new ButtonBuilder()
       .setCustomId("sample_button")
-      .setLabel("リアクションを追加！")
-      .setStyle(ButtonStyle.Primary);
+      .setLabel("参加する")
+      .setStyle(ButtonStyle.Success); // 緑系のボタン
 
     const row = new ActionRowBuilder().addComponents(button);
 
     // メッセージを送信
     await channel.send({
-      content: "こんにちは！週の始まりです。頑張りましょう！",
+      content: "同期と交流したいアプレンティス生は「参加」ボタンを押してね!!\n\n",
       components: [row],
     });
 
