@@ -1,5 +1,12 @@
 // main.mjs
-import { Client, GatewayIntentBits, ButtonBuilder, ButtonStyle, ActionRowBuilder, InteractionType } from "discord.js";
+import {
+  Client,
+  GatewayIntentBits,
+  ButtonBuilder,
+  ButtonStyle,
+  ActionRowBuilder,
+  InteractionType,
+} from "discord.js";
 import cron from "node-cron";
 import fs from "fs";
 
@@ -34,7 +41,9 @@ async function sendScheduledMessage() {
     const channel = await client.channels.fetch(channelId);
 
     if (!channel || !channel.isTextBased()) {
-      console.error("指定されたチャンネルが見つからないか、テキストチャンネルではありません。");
+      console.error(
+        "指定されたチャンネルが見つからないか、テキストチャンネルではありません。"
+      );
       return;
     }
 
@@ -45,7 +54,7 @@ async function sendScheduledMessage() {
       .setStyle(ButtonStyle.Success); // 緑系のボタン
 
     const row = new ActionRowBuilder().addComponents(button);
-    
+
     // メッセージを送信
     await channel.send({
       content: "同期と交流したいアプレンティス生は「参加」ボタンを押してね!!",
@@ -60,7 +69,10 @@ async function sendScheduledMessage() {
 
 // ボタンが押された時の処理
 client.on("interactionCreate", async (interaction) => {
-  if (interaction.type === InteractionType.MessageComponent && interaction.customId === "sample_button") {
+  if (
+    interaction.type === InteractionType.MessageComponent &&
+    interaction.customId === "sample_button"
+  ) {
     try {
       const user = interaction.user;
       const guild = interaction.guild;
@@ -70,18 +82,31 @@ client.on("interactionCreate", async (interaction) => {
       // ユーザー情報をデータベースに保存
       const data = JSON.parse(fs.readFileSync(DB_PATH, "utf8"));
       if (!data.find((entry) => entry.id === user.id)) {
-        data.push({ id: user.id, username: user.username, nickname, timestamp: new Date().toISOString() });
+        data.push({
+          id: user.id,
+          username: user.username,
+          nickname,
+          timestamp: new Date().toISOString(),
+        });
         fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2));
         console.log(`ユーザー情報を保存しました: ${nickname} (${user.id})`);
       } else {
-        console.log(`ユーザー情報はすでに保存されています: ${nickname} (${user.id})`);
+        console.log(
+          `ユーザー情報はすでに保存されています: ${nickname} (${user.id})`
+        );
       }
 
       // ボタン押下に成功したことを通知
-      await interaction.reply({ content: "参加が記録されました！", ephemeral: true });
+      await interaction.reply({
+        content: "参加が記録されました！",
+        ephemeral: true,
+      });
     } catch (error) {
       console.error("データベース保存中にエラーが発生しました:", error);
-      await interaction.reply({ content: "エラーが発生しました。もう一度お試しください。", ephemeral: true });
+      await interaction.reply({
+        content: "エラーが発生しました。もう一度お試しください。",
+        ephemeral: true,
+      });
     }
   }
 });
