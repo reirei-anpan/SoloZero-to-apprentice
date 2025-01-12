@@ -17,6 +17,7 @@ const client = new Client({
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildMembers, // サーバーニックネーム取得に必要
   ],
 });
 
@@ -62,15 +63,18 @@ client.on("interactionCreate", async (interaction) => {
   if (interaction.type === InteractionType.MessageComponent && interaction.customId === "sample_button") {
     try {
       const user = interaction.user;
+      const guild = interaction.guild;
+      const member = await guild.members.fetch(user.id); // メンバー情報を取得
+      const nickname = member.nickname || user.username; // ニックネームが設定されていない場合はユーザー名を使用
 
       // ユーザー情報をデータベースに保存
       const data = JSON.parse(fs.readFileSync(DB_PATH, "utf8"));
       if (!data.find((entry) => entry.id === user.id)) {
-        data.push({ id: user.id, username: user.username, timestamp: new Date().toISOString() });
+        data.push({ id: user.id, username: user.username, nickname, timestamp: new Date().toISOString() });
         fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2));
-        console.log(`ユーザー情報を保存しました: ${user.username} (${user.id})`);
+        console.log(`ユーザー情報を保存しました: ${nickname} (${user.id})`);
       } else {
-        console.log(`ユーザー情報はすでに保存されています: ${user.username} (${user.id})`);
+        console.log(`ユーザー情報はすでに保存されています: ${nickname} (${user.id})`);
       }
 
       // ボタン押下に成功したことを通知
