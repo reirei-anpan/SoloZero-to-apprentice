@@ -30,14 +30,14 @@ async function sendScheduledMessage() {
     // ボタンを作成
     const button = new ButtonBuilder()
       .setCustomId("sample_button")
-      .setLabel("参加する")
+      .setLabel("参加")
       .setStyle(ButtonStyle.Success); // 緑系のボタン
 
     const row = new ActionRowBuilder().addComponents(button);
-
+    
     // メッセージを送信
     await channel.send({
-      content: "同期と交流したいアプレンティス生は「参加」ボタンを押してね!!\n\n",
+      content: "同期と交流したいアプレンティス生は「参加」ボタンを押してね!!",
       components: [row],
     });
 
