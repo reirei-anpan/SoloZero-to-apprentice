@@ -1,5 +1,15 @@
-import { Client, GatewayIntentBits, ButtonBuilder, ButtonStyle, ActionRowBuilder } from "discord.js";
+// main.mjs
+import { Client, GatewayIntentBits, ButtonBuilder, ButtonStyle, ActionRowBuilder, InteractionType } from "discord.js";
 import cron from "node-cron";
+import fs from "fs";
+
+// データベースファイルのパス
+const DB_PATH = "./database.json";
+
+// データベース初期化
+if (!fs.existsSync(DB_PATH)) {
+  fs.writeFileSync(DB_PATH, JSON.stringify([]));
+}
 
 // Discord Botの初期化
 const client = new Client({
@@ -46,6 +56,31 @@ async function sendScheduledMessage() {
     console.error("メッセージ送信中にエラーが発生しました:", error);
   }
 }
+
+// ボタンが押された時の処理
+client.on("interactionCreate", async (interaction) => {
+  if (interaction.type === InteractionType.MessageComponent && interaction.customId === "sample_button") {
+    try {
+      const user = interaction.user;
+
+      // ユーザー情報をデータベースに保存
+      const data = JSON.parse(fs.readFileSync(DB_PATH, "utf8"));
+      if (!data.find((entry) => entry.id === user.id)) {
+        data.push({ id: user.id, username: user.username, timestamp: new Date().toISOString() });
+        fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2));
+        console.log(`ユーザー情報を保存しました: ${user.username} (${user.id})`);
+      } else {
+        console.log(`ユーザー情報はすでに保存されています: ${user.username} (${user.id})`);
+      }
+
+      // ボタン押下に成功したことを通知
+      await interaction.reply({ content: "参加が記録されました！", ephemeral: true });
+    } catch (error) {
+      console.error("データベース保存中にエラーが発生しました:", error);
+      await interaction.reply({ content: "エラーが発生しました。もう一度お試しください。", ephemeral: true });
+    }
+  }
+});
 
 // 毎週月曜日の夜21時にメッセージを送信
 cron.schedule("0 21 * * 1", sendScheduledMessage);
