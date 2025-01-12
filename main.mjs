@@ -16,6 +16,7 @@ import { Client as Youtubei, MusicClient } from "youtubei";
 const youtubei = new Youtubei();
 
 
+// ウェブサーバーの起動
 let postCount = 0;
 const app = express();
 app.listen(3000);
@@ -34,6 +35,7 @@ app.get('/', function(req, res) {
   res.send('<a href="https://note.com/exteoi/n/n0ea64e258797</a> に解説があります。');
 })
 
+// Discord Botの初期化
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -43,6 +45,7 @@ const client = new Client({
   ],
 });
 
+// commands/ ディレクトリ内のすべてのファイルを読み込み、コマンドとして登録
 client.commands = new Collection();
 
 const categoryFoldersPath = path.join(process.cwd(), "commands");
@@ -60,6 +63,7 @@ for (const folder of commandFolders) {
   }
 }
 
+// すべてのhandlers/ファイルを動的に読み込みます
 const handlers = new Map();
 
 const handlersPath = path.join(process.cwd(), "handlers");
@@ -72,6 +76,7 @@ for (const file of handlerFiles) {
   });
 }
 
+// Discordで発生する各種イベントを処理
 client.on("interactionCreate", async (interaction) => {
   await handlers.get("interactionCreate").default(interaction);
 });
