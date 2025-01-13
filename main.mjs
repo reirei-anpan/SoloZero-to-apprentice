@@ -111,15 +111,71 @@ client.on("interactionCreate", async (interaction) => {
   }
 });
 
+
+// マッチング処理
+async function matchUsers() {
+  try {
+    const data = JSON.parse(fs.readFileSync(DB_PATH, "utf8"));
+    if (data.length < 2) {
+      console.log("マッチングに必要なユーザーが不足しています。");
+      return;
+    }
+
+    const shuffled = data.sort(() => Math.random() - 0.5); // ユーザーをシャッフル
+    const pairs = [];
+
+    while (shuffled.length >= 2) {
+      const user1 = shuffled.pop();
+      const user2 = shuffled.pop();
+      pairs.push(`${user1.username} と ${user2.username}`);
+    }
+
+    // チャンネルIDを指定
+    const channelId = "1191988459179614231"; // ここに送信したいテキストチャンネルのIDを設定
+    const channel = await client.channels.fetch(channelId);
+
+    if (!channel || !channel.isTextBased()) {
+      console.error(
+        "指定されたチャンネルが見つからないか、テキストチャンネルではありません。"
+      );
+      return;
+    }
+
+    // マッチング結果を送信
+    if (pairs.length > 0) {
+      await channel.send(
+        `本日のマッチング結果:\n${pairs.join("\n")}`
+      );
+      console.log("マッチング結果を送信しました。");
+    } else {
+      await channel.send("マッチングするユーザーが不足しています。");
+      console.log("マッチングするユーザーが不足しています。");
+    }
+  } catch (error) {
+    console.error("マッチング処理中にエラーが発生しました:", error);
+  }
+}
+
 // 毎週月・水・金 の夜21時にメッセージを送信
-cron.schedule("0 21 * * 1,3,5", sendScheduledMessage);
+cron.schedule("0 21 * * 1,3,5", async () => {
+  await sendScheduledMessage();
+});
 
 // "post"と投稿されたらメッセージを送信
 client.on("messageCreate", async (message) => {
   if (message.content.toLowerCase() === "post") {
     await sendScheduledMessage();
+    await matchUsers();
   }
 });
+
+// "post"と投稿されたらメッセージを送信
+client.on("messageCreate", async (message) => {
+  if (message.content.toLowerCase() === "send") {
+    await matchUsers();
+  }
+});
+
 
 // Botのログイン
 client.login(process.env.TOKEN);
