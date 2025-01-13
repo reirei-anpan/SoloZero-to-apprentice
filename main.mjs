@@ -165,7 +165,6 @@ cron.schedule("0 21 * * 1,3,5", async () => {
 client.on("messageCreate", async (message) => {
   if (message.content.toLowerCase() === "post") {
     await sendScheduledMessage();
-    await matchUsers();
   }
 });
 
