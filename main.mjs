@@ -130,18 +130,26 @@ async function matchUsers() {
 
     // マッチングに必要なユーザーが不足している場合
     if (data.length < 2) {
-      await channel.send("マッチングに必要なユーザーが不足しています");
+      await channel.send("マッチングに必要なユーザーが不足しています。次回までに参加者を増やしてください！");
       return; // 処理を中止
     }
 
     const shuffled = data.sort(() => Math.random() - 0.5); // ユーザーをシャッフル
     const pairs = [];
 
-    // マッチングロジック
     while (shuffled.length >= 2) {
       const user1 = shuffled.pop();
       const user2 = shuffled.pop();
       pairs.push(`${user1.username} と ${user2.username}`);
+    }
+
+    if (shuffled.length === 1) { // ユーザーが奇数の場合、最後の1人を最終ペアに追加
+      const lastUser = shuffled.pop();
+      if (pairs.length > 0) {
+        pairs[pairs.length - 1] += ` と ${lastUser.username}`;
+      } else {
+        pairs.push(`${lastUser.username}`); // 奇数かつ1人だけの場合
+      }
     }
 
     // マッチング結果を送信
@@ -158,6 +166,7 @@ async function matchUsers() {
     console.error("マッチング処理中にエラーが発生しました:", error);
   }
 }
+
 
 
 // 毎週月・水・金 の夜21時にメッセージを送信
