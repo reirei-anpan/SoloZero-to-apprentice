@@ -24,7 +24,7 @@ const client = new Client({
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.MessageContent,
-    GatewayIntentBits.GuildMembers, // サーバーニックネーム取得に必要
+    GatewayIntentBits.GuildMembers,
   ],
 });
 
@@ -111,8 +111,8 @@ client.on("interactionCreate", async (interaction) => {
   }
 });
 
-// 毎週月曜日の夜21時にメッセージを送信
-cron.schedule("0 21 * * 1", sendScheduledMessage);
+// 毎週月・水・金 の夜21時にメッセージを送信
+cron.schedule("0 21 * * 1,3,5", sendScheduledMessage);
 
 // "post"と投稿されたらメッセージを送信
 client.on("messageCreate", async (message) => {
