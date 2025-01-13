@@ -28,5 +28,23 @@
     "username": "dummy_user_3",
     "nickname": "ダミーユーザー3",
     "timestamp": "2025-01-14T19:00:00.000Z"
+  },
+  {
+    "id": "984123456789012347",
+    "username": "dummy_user_4",
+    "nickname": "ダミーユーザー4",
+    "timestamp": "2025-01-14T08:00:00.000Z"
+  },
+  {
+    "id": "567890123456789018",
+    "username": "dummy_user_5",
+    "nickname": "ダミーユーザー5",
+    "timestamp": "2025-01-14T09:00:00.000Z"
+  },
+  {
+    "id": "567890123456789019",
+    "username": "dummy_user_6",
+    "nickname": "ダミーユーザー6",
+    "timestamp": "2025-01-14T19:00:00.000Z"
   }
 ]
