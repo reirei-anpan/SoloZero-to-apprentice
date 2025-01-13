@@ -111,7 +111,6 @@ client.on("interactionCreate", async (interaction) => {
   }
 });
 
-
 // マッチング処理
 async function matchUsers() {
   try {
@@ -130,7 +129,9 @@ async function matchUsers() {
 
     // マッチングに必要なユーザーが不足している場合
     if (data.length < 2) {
-      await channel.send("本日はマッチングできませんでした...🥺\nまた、来週応募してね!!");
+      await channel.send(
+        "本日はマッチングできませんでした...🥺\nまた、来週応募してね!!"
+      );
       return; // 処理を中止
     }
 
@@ -143,26 +144,32 @@ async function matchUsers() {
       pairs.push(`${user1.username} と ${user2.username}`);
     }
 
-    if (shuffled.length === 1) { // ユーザーが奇数の場合、最後の1人を最終ペアに追加
+    if (shuffled.length === 1) {
+      // ユーザーが奇数の場合、最後の1人を最終ペアに追加
       const lastUser = shuffled.pop();
       if (pairs.length > 0) {
         pairs[pairs.length - 1] += ` と ${lastUser.username}`;
       }
     }
 
-    // マッチング結果を送信
+    // テキストデータとしてマッチング結果を送信
     if (pairs.length > 0) {
-      await channel.send(
-        `本日のマッチング結果:\n${pairs.join("\n")}`
-      );
+      const messageContent = `:sparkles: 本日のマッチング結果 :sparkles:
+
+--------------------------------
+${pairs.join("\n")}
+--------------------------------
+
+21時になったら、各自でルームに参加してお話ししましょう!!
+夜ご飯やお酒を準備して、リラックスした時間を過ごしてください:beers:`;
+
+      await channel.send(messageContent);
       console.log("マッチング結果を送信しました。");
     }
   } catch (error) {
     console.error("マッチング処理中にエラーが発生しました:", error);
   }
 }
-
-
 
 // 毎週月・水・金 の夜21時にメッセージを送信
 cron.schedule("0 21 * * 1,3,5", async () => {
@@ -182,7 +189,6 @@ client.on("messageCreate", async (message) => {
     await matchUsers();
   }
 });
-
 
 // Botのログイン
 client.login(process.env.TOKEN);
