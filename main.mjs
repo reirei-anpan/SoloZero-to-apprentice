@@ -137,11 +137,25 @@ async function matchUsers() {
 
     const shuffled = data.sort(() => Math.random() - 0.5); // ユーザーをシャッフル
     const pairs = [];
+    
+    
+    // ルーム名の定義
+    const rooms = [
+      ":crab: | キャンサールーム",
+      ":lion_face: | レオルーム",
+      ":turtle: | アクエリアスルーム",
+      ":ram: | アリエスルーム",
+      ":cow: | タウロスルーム",
+    ];
+
+    let roomIndex = 0;
 
     while (shuffled.length >= 2) {
       const user1 = shuffled.pop();
       const user2 = shuffled.pop();
-      pairs.push(`${user1.username} と ${user2.username}`);
+      const roomName = rooms[roomIndex % rooms.length];
+      pairs.push(`${roomName}：${user1.username} & ${user2.username}`);
+      roomIndex++;
     }
 
     if (shuffled.length === 1) {
