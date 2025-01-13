@@ -130,7 +130,7 @@ async function matchUsers() {
 
     // マッチングに必要なユーザーが不足している場合
     if (data.length < 2) {
-      await channel.send("マッチングに必要なユーザーが不足しています。次回までに参加者を増やしてください！");
+      await channel.send("本日はマッチングできませんでした...🥺\nまた、来週応募してね!!");
       return; // 処理を中止
     }
 
@@ -147,8 +147,6 @@ async function matchUsers() {
       const lastUser = shuffled.pop();
       if (pairs.length > 0) {
         pairs[pairs.length - 1] += ` と ${lastUser.username}`;
-      } else {
-        pairs.push(`${lastUser.username}`); // 奇数かつ1人だけの場合
       }
     }
 
@@ -158,9 +156,6 @@ async function matchUsers() {
         `本日のマッチング結果:\n${pairs.join("\n")}`
       );
       console.log("マッチング結果を送信しました。");
-    } else {
-      await channel.send("マッチングするユーザーが不足しています。");
-      console.log("マッチングするユーザーが不足しています。");
     }
   } catch (error) {
     console.error("マッチング処理中にエラーが発生しました:", error);
