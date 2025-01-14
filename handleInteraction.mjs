@@ -1,10 +1,12 @@
+import { InteractionType } from "discord.js";
 import fs from "fs";
+
 
 const DB_PATH = "./database.json";
 
 export async function handleInteraction(interaction) {
   if (
-    interaction.type === interaction.MessageComponent &&
+    interaction.type === InteractionType.MessageComponent &&
     interaction.customId === "sample_button"
   ) {
     try {
