@@ -1,3 +1,7 @@
+import fs from "fs";
+
+const PAIRS_PATH = "./pairs.json";
+
 export async function sendReminderMessage(client) {
   try {
     const channelId = "1191988459179614231"; // チャンネルID
@@ -10,12 +14,26 @@ export async function sendReminderMessage(client) {
       return;
     }
 
-    // マッチング結果を取得
-    // const pairs = await matchUsers(client, false); // falseフラグで送信せずペアのみ取得
+    // pairs.jsonの内容を取得
+    let pairs = [];
+    if (fs.existsSync(PAIRS_PATH)) {
+      const data = fs.readFileSync(PAIRS_PATH, "utf8");
+      pairs = JSON.parse(data); // JSON形式をパースして配列に変換
+    }
+
+    // pairs.jsonが空の場合の処理
+    if (pairs.length === 0) {
+      console.log("pairs.jsonにマッチングデータがありません。");
+      await channel.send("現在、マッチング結果がありません。");
+      return;
+    }
+
+    // メッセージを作成
+    const message = `:sparkles: 交流10分前のお知らせ :sparkles:\n\n--------------------------------\n${pairs.join(
+      "\n"
+    )}\n--------------------------------\n\n21時になったら各自ルームに参加して、交流を始めてね!!`;
 
     // メッセージを送信
-    const message = `:sparkles: 交流10分前のお知らせ :sparkles:`
-
     await channel.send({
       content: message,
     });
