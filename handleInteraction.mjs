@@ -4,10 +4,19 @@ const DB_PATH = "./database.json";
 
 export async function handleInteraction(interaction) {
   if (
-    interaction.type === InteractionType.MessageComponent &&
+    interaction.type === interaction.MessageComponent &&
     interaction.customId === "sample_button"
   ) {
     try {
+      await interaction.deferReply({ ephemeral: true }); // 応答を保留状態にする
+
+      if (!interaction.guild) {
+        await interaction.editReply({
+          content: "この操作はサーバー内でのみ実行可能です。",
+        });
+        return;
+      }
+
       const user = interaction.user;
       const guild = interaction.guild;
       const member = await guild.members.fetch(user.id);
@@ -22,21 +31,21 @@ export async function handleInteraction(interaction) {
           timestamp: new Date().toISOString(),
         });
         fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2));
-
+        console.log(`ユーザー情報を保存しました: ${nickname} (${user.id})`);
       } else {
-        console.log("ユーザー情報はすでに保存されています:"${nickname} (${user.id}));
+        console.log(`ユーザー情報はすでに保存されています: ${nickname} (${user.id})`);
       }
 
-      await interaction.reply({
+      await interaction.editReply({
         content: "参加が記録されました！",
-        ephemeral: true,
       });
     } catch (error) {
       console.error("データベース保存中にエラーが発生しました:", error);
-      await interaction.reply({
-        content: "エラーが発生しました。もう一度お試しください。",
-        ephemeral: true,
-      });
+      if (!interaction.replied) {
+        await interaction.editReply({
+          content: "エラーが発生しました。もう一度お試しください。",
+        });
+      }
     }
   }
 }

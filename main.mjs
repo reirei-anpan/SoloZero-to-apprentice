@@ -26,7 +26,7 @@ client.on("ready", () => {
 
 // "interactionCreate" イベントでボタン処理をハンドリング
 client.on("interactionCreate", async (interaction) => {
-  await handleInteraction(interaction);
+  await handleInteraction(client);
 });
 
 // "messageCreate" イベントでメッセージ処理をハンドリング
