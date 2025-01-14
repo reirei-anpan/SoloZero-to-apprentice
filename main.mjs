@@ -186,7 +186,7 @@ ${pairs.join("\n")}
 }
 
 // 毎週月・水・金 の夜21時にメッセージを送信
-cron.schedule("0 23 * * 1,3,5", async () => {
+cron.schedule("0 12 * * 1,3,5", async () => {
   await sendScheduledMessage();
 });
 
