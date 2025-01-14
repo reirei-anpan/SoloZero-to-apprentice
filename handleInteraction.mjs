@@ -22,9 +22,9 @@ export async function handleInteraction(interaction) {
           timestamp: new Date().toISOString(),
         });
         fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2));
-        console.log(`ユーザー情報を保存しました: ${nickname} (${user.id})`);
+
       } else {
-        console.log(`ユーザー情報はすでに保存されています: ${nickname} (${user.id})`);
+        console.log("ユーザー情報はすでに保存されています:"${nickname} (${user.id}));
       }
 
       await interaction.reply({
