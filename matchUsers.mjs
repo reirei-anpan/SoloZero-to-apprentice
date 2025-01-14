@@ -1,6 +1,7 @@
 import fs from "fs";
 
 const DB_PATH = "./database.json";
+const PAIRS_PATH = "./pairs.json";
 
 export async function matchUsers(client) {
   try {
@@ -39,6 +40,9 @@ export async function matchUsers(client) {
     if (shuffled.length === 1) {
       pairs[pairs.length - 1] += ` と ${shuffled.pop().username}`;
     }
+    
+    // マッチング結果をファイルに保存
+    fs.writeFileSync(PAIRS_PATH, JSON.stringify(pairs, null, 2));
 
     await channel.send(`:sparkles: 本日のマッチング結果 :sparkles:\n\n--------------------------------\n${pairs.join("\n")}\n--------------------------------\n\n21時になったら、各自でルームに参加してお話ししましょう!!\n夜ご飯やお酒を準備して、リラックスした時間を過ごしてください:beers:`);
   } catch (error) {
