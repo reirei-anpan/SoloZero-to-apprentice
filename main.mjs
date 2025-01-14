@@ -4,7 +4,8 @@ import {
   InteractionType,
 } from "discord.js";
 import cron from "node-cron";
-import { sendScheduledMessage, sendReminderMessage } from "./sendScheduledMessage.mjs";
+import { sendScheduledMessage} from "./sendScheduledMessage.mjs";
+import { sendReminderMessage } from "./sendReminderMessage.mjs";
 import { handleInteraction } from "./handleInteraction.mjs";
 import { matchUsers } from "./matchUsers.mjs";
 
@@ -30,14 +31,14 @@ client.on("interactionCreate", async (interaction) => {
 
 // "messageCreate" イベントでメッセージ処理をハンドリング
 client.on("messageCreate", async (message) => {
-  if (message.content.toLowerCase() === "reminder") {
-    await sendReminderMessage(client);
-  }
   if (message.content.toLowerCase() === "post") {
     await sendScheduledMessage(client);
   }
   if (message.content.toLowerCase() === "send") {
     await matchUsers(client);
+  }
+  if (message.content.toLowerCase() === "reminder") {
+    await sendReminderMessage(client);
   }
 });
 
