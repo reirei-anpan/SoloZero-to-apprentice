@@ -1,4 +1,4 @@
-import { ButtonBuilder, ButtonStyle, ActionRowBuilder, EmbedBuilder } from "discord.js";
+import { ButtonBuilder, ButtonStyle, ActionRowBuilder } from "discord.js";
 
 export async function sendScheduledMessage(client) {
   try {
@@ -10,12 +10,6 @@ export async function sendScheduledMessage(client) {
       return;
     }
 
-    // Embedを作成
-    const embed = new EmbedBuilder()
-      .setColor(0x00ff00) // 緑色
-      .setDescription("同期と交流したいアプレンティス生は「参加」ボタンを押してね!!");
-
-    // ボタンを作成
     const button = new ButtonBuilder()
       .setCustomId("sample_button")
       .setLabel("参加")
@@ -23,9 +17,8 @@ export async function sendScheduledMessage(client) {
 
     const row = new ActionRowBuilder().addComponents(button);
 
-    // メッセージを送信
     await channel.send({
-      embeds: [embed],
+      content: "同期と交流したいアプレンティス生は「参加」ボタンを押してね!!",
       components: [row],
     });
 
