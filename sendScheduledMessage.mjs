@@ -13,7 +13,7 @@ export async function sendScheduledMessage(client) {
     }
 
     const button = new ButtonBuilder()
-      .setCustomId("sample_button")
+      .setCustomId("participation_button")
       .setLabel("参加")
       .setStyle(ButtonStyle.Success);
 

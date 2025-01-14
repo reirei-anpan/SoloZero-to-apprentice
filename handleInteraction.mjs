@@ -6,7 +6,7 @@ const DB_PATH = "./database.json";
 export async function handleInteraction(interaction) {
   if (
     interaction.type === InteractionType.MessageComponent &&
-    interaction.customId === "sample_button"
+    interaction.customId === "participation_button"
   ) {
     try {
       const user = interaction.user;
@@ -14,7 +14,17 @@ export async function handleInteraction(interaction) {
       const member = await guild.members.fetch(user.id);
       const nickname = member.nickname || user.username;
 
-      const data = JSON.parse(fs.readFileSync(DB_PATH, "utf8"));
+      // データベースの読み込み
+      let data;
+      try {
+        const fileContent = fs.readFileSync(DB_PATH, "utf8");
+        data = fileContent ? JSON.parse(fileContent) : [];
+      } catch (error) {
+        console.error("データベース読み込み中にエラーが発生しました:", error);
+        data = []; // エラーが発生した場合は空配列で初期化
+      }
+      
+      // ユーザー情報の保存
       if (!data.find((entry) => entry.id === user.id)) {
         data.push({
           id: user.id,
