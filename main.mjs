@@ -30,14 +30,14 @@ client.on("interactionCreate", async (interaction) => {
 
 // "messageCreate" イベントでメッセージ処理をハンドリング
 client.on("messageCreate", async (message) => {
+  if (message.content.toLowerCase() === "reminder") {
+    await sendReminderMessage(client);
+  }
   if (message.content.toLowerCase() === "post") {
     await sendScheduledMessage(client);
   }
   if (message.content.toLowerCase() === "send") {
     await matchUsers(client);
-  }
-    if (message.content.toLowerCase() === " reminder") {
-    await sendReminderMessage(client);
   }
 });
 
@@ -47,7 +47,7 @@ cron.schedule("0 12 * * 1,3,5", async () => {
 });
 
 // 毎週土の12時にメッセージを送信
-cron.schedule("0 12 * * 1,3,5", async () => {
+cron.schedule("0 3 * * 6", async () => {
   await matchUsers(client);
 });
 

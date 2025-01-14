@@ -55,7 +55,7 @@ export async function sendReminderMessage(client) {
     }
 
     // マッチング結果を取得
-    const pairs = await matchUsers(client, false); // falseフラグで送信せずペアのみ取得
+    // const pairs = await matchUsers(client, false); // falseフラグで送信せずペアのみ取得
 
     // メッセージを送信
     const message = `:sparkles: 交流10分前のお知らせ :sparkles:
