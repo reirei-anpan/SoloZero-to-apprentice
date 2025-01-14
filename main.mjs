@@ -38,9 +38,14 @@ client.on("messageCreate", async (message) => {
   }
 });
 
-// 毎週月・水・金の夜21時にメッセージを送信
+// 毎週月・水・金の21時にメッセージを送信
 cron.schedule("0 12 * * 1,3,5", async () => {
   await sendScheduledMessage(client);
+});
+
+// 毎週土の12時にメッセージを送信
+cron.schedule("0 12 * * 1,3,5", async () => {
+  await matchUsers(client);
 });
 
 // Botのログイン
