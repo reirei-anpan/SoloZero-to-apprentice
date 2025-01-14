@@ -1,7 +1,6 @@
 import { InteractionType } from "discord.js";
 import fs from "fs";
 
-
 const DB_PATH = "./database.json";
 
 export async function handleInteraction(interaction) {
@@ -10,15 +9,6 @@ export async function handleInteraction(interaction) {
     interaction.customId === "sample_button"
   ) {
     try {
-      await interaction.deferReply({ ephemeral: true }); // 応答を保留状態にする
-
-      if (!interaction.guild) {
-        await interaction.editReply({
-          content: "この操作はサーバー内でのみ実行可能です。",
-        });
-        return;
-      }
-
       const user = interaction.user;
       const guild = interaction.guild;
       const member = await guild.members.fetch(user.id);
@@ -38,16 +28,16 @@ export async function handleInteraction(interaction) {
         console.log(`ユーザー情報はすでに保存されています: ${nickname} (${user.id})`);
       }
 
-      await interaction.editReply({
+      await interaction.reply({
         content: "参加が記録されました！",
+        ephemeral: true,
       });
     } catch (error) {
       console.error("データベース保存中にエラーが発生しました:", error);
-      if (!interaction.replied) {
-        await interaction.editReply({
-          content: "エラーが発生しました。もう一度お試しください。",
-        });
-      }
+      await interaction.reply({
+        content: "エラーが発生しました。もう一度お試しください。",
+        ephemeral: true,
+      });
     }
   }
 }
