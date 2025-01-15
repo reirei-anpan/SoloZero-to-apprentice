@@ -25,7 +25,7 @@ export async function matchUsers(client) {
 
     console.log("読み取ったデータ:", data); // ここまではデータがある
     
-        // メンションリストを作成
+    // メンションリストを作成
     const mentions = data
       .filter((user) => user.id) // IDが存在するエントリのみを対象
       .map((user) => `<@${user.id}>`) // 各ユーザーのIDをDiscordのメンション形式に変換

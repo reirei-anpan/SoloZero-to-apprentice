@@ -26,7 +26,7 @@ export async function sendEndTimeMessage(client) {
 
     console.log("終了メッセージを送信しました。");
 
-    // データベースとペア情報を空にする
+    // イベント参加者とペア情報を空にする
     fs.writeFileSync(DB_PATH, JSON.stringify([], null, 2));
     console.log(`データベース (${DB_PATH}) を初期化しました。`);
 
