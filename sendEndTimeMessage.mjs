@@ -5,6 +5,7 @@ const PAIRS_PATH = "./pairs.json";
 
 export async function sendEndTimeMessage(client) {
   try {
+    const data = JSON.parse(fs.readFileSync(DB_PATH, "utf8"));
     const channelId = "1191988459179614231"; // チャンネルID
     const channel = await client.channels.fetch(channelId);
 
@@ -14,10 +15,16 @@ export async function sendEndTimeMessage(client) {
       );
       return;
     }
+    
+    // メンションリストを作成
+    const mentions = data
+      .filter((user) => user.id) // IDが存在するエントリのみを対象
+      .map((user) => `<@${user.id}>`) // 各ユーザーのIDをDiscordのメンション形式に変換
+      .join(" ");
 
     // メッセージを作成
     const message =
-      "交流時間終了です!! 相手にお礼を伝えて交流を終わりましょう👏";
+      `${mentions}\n\n交流時間終了です!! 相手にお礼を伝えて交流を終わりましょう👏`;
 
     // メッセージを送信
     await channel.send({

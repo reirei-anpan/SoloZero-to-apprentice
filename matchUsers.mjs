@@ -22,22 +22,12 @@ export async function matchUsers(client) {
       );
       return;
     }
-
-    console.log("読み取ったデータ:", data); // ここまではデータがある
     
     // メンションリストを作成
     const mentions = data
       .filter((user) => user.id) // IDが存在するエントリのみを対象
       .map((user) => `<@${user.id}>`) // 各ユーザーのIDをDiscordのメンション形式に変換
       .join(" ");
-
-    // デバッグ情報を出力
-    if (mentions.trim() === "") {
-      console.error("メンションリストが空です。データに問題がある可能性があります。");
-      console.error("読み取ったデータ2:", data);
-    } else {
-      console.log("生成されたメンション:", mentions);
-    }
 
     const shuffled = data.sort(() => Math.random() - 0.5);
     const pairs = [];
