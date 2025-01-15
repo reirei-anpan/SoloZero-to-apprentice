@@ -52,5 +52,10 @@ cron.schedule("0 3 * * 6", async () => {
   await matchUsers(client);
 });
 
+// 毎週土の20時50分にメッセージを送信
+cron.schedule("50 11 * * 6", async () => {
+  await sendReminderMessage(client);
+});
+
 // Botのログイン
 client.login(process.env.TOKEN);
