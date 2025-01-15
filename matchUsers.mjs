@@ -53,13 +53,7 @@ export async function matchUsers(client) {
     fs.writeFileSync(PAIRS_PATH, JSON.stringify(pairs, null, 2));
 
     // メンションリストを作成
-    const mentions = data
-      .filter((user) => user.id) // IDが存在するユーザーのみを対象
-      .map((user) => `<@${user.id}>`)
-      .join(" ");
-
-    // デバッグ: メンションリストとdata内容を確認
-    console.log("データ内容:", data);
+    const mentions = data.map((user) => `<@${user.id}>`).join(" ");
     console.log("生成されたメンション:", mentions);
 
     // メッセージを送信
