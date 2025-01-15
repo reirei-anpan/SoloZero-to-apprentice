@@ -44,7 +44,7 @@ export async function matchUsers(client) {
     // マッチング結果をファイルに保存
     fs.writeFileSync(PAIRS_PATH, JSON.stringify(pairs, null, 2));
 
-    await channel.send(`:sparkles: 本日のマッチング結果 :sparkles:\n\n--------------------------------\n${pairs.join("\n")}\n--------------------------------\n\n21時になったら、各自でルームに参加してお話ししましょう!!\n夜ご飯やお酒を準備して、リラックスした時間を過ごしてください:beers:`);
+    await channel.send(`:sparkles: 本日のマッチング結果 :sparkles:\n\n--------------------------------\n${pairs.join("\n")}\n--------------------------------\n\n21時になったら、各自でルームに参加してお話ししましょう!!\n夜ご飯やお酒を準備して、リラックスした時間を過ごしてください:beers:\n\n※ 参加が難しくなった場合は、ペアの同期に連絡してね!!`);
   } catch (error) {
     console.error("マッチング処理中にエラーが発生しました:", error);
   }
