@@ -3,6 +3,17 @@ import fs from "fs";
 
 const DB_PATH = "./event_members.json";
 
+async function isValidDiscordUserID(client, userId) {
+  try {
+    const user = await client.users.fetch(userId);
+    console.log(`ユーザーが見つかりました: ${user.tag}`);
+    return true; // 有効なユーザー ID
+  } catch (error) {
+    console.error(`ユーザーが見つかりません: ${userId}`, error.message);
+    return false; // 無効なユーザー ID
+  }
+}
+
 export async function handleInteraction(interaction) {
   if (
     interaction.type === InteractionType.MessageComponent &&
@@ -10,6 +21,17 @@ export async function handleInteraction(interaction) {
   ) {
     try {
       const user = interaction.user;
+      
+      // Discord API を使用してユーザー ID の有効性を確認
+      const isValid = await isValidDiscordUserID(interaction.client, user.id);
+      if (!isValid) {
+        await interaction.reply({
+          content: "無効なユーザー ID です。操作をキャンセルしました。",
+          ephemeral: true,
+        });
+        return;
+      }
+      
       const guild = interaction.guild;
       const member = await guild.members.fetch(user.id);
       const nickname = member.nickname || user.username;
