@@ -1,6 +1,6 @@
 import fs from "fs";
 
-const DB_PATH = "./database.json";
+const DB_PATH = "./event_members.json";
 const PAIRS_PATH = "./pairs.json";
 
 export async function sendEndTimeMessage(client) {
