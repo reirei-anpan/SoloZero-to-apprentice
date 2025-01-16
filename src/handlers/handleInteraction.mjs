@@ -1,7 +1,9 @@
 import { InteractionType } from "discord.js";
+
+import path from "path";
 import fs from "fs";
 
-const DB_PATH = "./../../database/event_members.json";
+const DB_PATH = path.resolve("database/event_members.json");
 
 export async function handleInteraction(interaction) {
   if (
