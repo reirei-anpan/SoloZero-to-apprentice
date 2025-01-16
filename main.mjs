@@ -46,23 +46,23 @@ client.on("messageCreate", async (message) => {
   }
 });
 
-// 毎週月・水・金の21時にメッセージを送信
-cron.schedule("0 12 * * 1,3,5", async () => {
+// 毎週火・木・日の21時にメッセージを送信
+cron.schedule("0 12 * * 2,4,0", async () => {
   await sendScheduledMessage(client);
 });
 
-// 毎週土の12時にメッセージを送信
-cron.schedule("0 3 * * 6", async () => {
+// 毎週水の12時にメッセージを送信
+cron.schedule("0 3 * * 3", async () => {
   await matchUsers(client);
 });
 
-// 毎週土の20時50分にメッセージを送信
-cron.schedule("50 11 * * 6", async () => {
+// 毎週水の21時50分にメッセージを送信
+cron.schedule("50 12 * * 3", async () => {
   await sendReminderMessage(client);
 });
 
-// 毎週土の21時30分にメッセージを送信
-cron.schedule("30 12 * * 6", async () => {
+// 毎週水の22時30分にメッセージを送信
+cron.schedule("30 13 * * 3", async () => {
   await sendEndTimeMessage(client);
 });
 
