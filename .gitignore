@@ -7,6 +7,8 @@ npm-debug.log*
 
 # データベースやキャッシュ
 .data/
+db.sqlite3
+db.js
 
 # Glitch 特有のファイル
 .glitchdotcom.json
