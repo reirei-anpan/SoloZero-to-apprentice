@@ -1,7 +1,7 @@
 import fs from "fs";
 
-const DB_PATH = "./event_members.json";
-const PAIRS_PATH = "./pairs.json";
+const DB_PATH = "./database/event_members.json";
+const PAIRS_PATH = "./database/pairs.json";
 
 export async function sendReminderMessage(client) {
   try {

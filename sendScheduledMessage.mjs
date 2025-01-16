@@ -26,7 +26,7 @@ export async function sendScheduledMessage(client) {
       2: "🚨 最後の募集 🚨\n\n応募期限は「本日 23:50分」まで!!\n\n@everyone\n\n次の水曜日、22時から同期と交流したいアプレンティス生は「参加」をクリック!!", // 火曜日
     };
 
-    const today = 2;//new Date().getDay(); // 今日の曜日を取得 (0: 日曜日, 1: 月曜日, 2:火曜日 ...)
+    const today = new Date().getDay(); // 今日の曜日を取得 (0: 日曜日, 1: 月曜日, 2:火曜日 ...)
     const message =
       messagesByDay[today] || "募集メッセージが設定されていません。";
 
