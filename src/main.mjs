@@ -4,11 +4,11 @@ import {
   InteractionType,
 } from "discord.js";
 import cron from "node-cron";
-import { sendScheduledMessage} from "./sendScheduledMessage.mjs";
-import { sendReminderMessage } from "./sendReminderMessage.mjs";
-import { sendEndTimeMessage } from "./sendEndTimeMessage.mjs";
-import { handleInteraction } from "./handleInteraction.mjs";
-import { matchUsers } from "./matchUsers.mjs";
+import { sendScheduledMessage} from "./tasks/sendScheduledMessage.mjs";
+import { sendReminderMessage } from "./tasks/sendReminderMessage.mjs";
+import { sendEndTimeMessage } from "./tasks/sendEndTimeMessage.mjs";
+import { handleInteraction } from "./handlers/handleInteraction.mjs";
+import { matchUsers } from "./match/matchUsers.mjs";
 
 // Discord Botの初期化
 const client = new Client({

@@ -40,5 +40,3 @@ export async function sendScheduledMessage(client) {
     console.error("メッセージ送信中にエラーが発生しました:", error);
   }
 }
-
-
