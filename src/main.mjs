@@ -30,21 +30,21 @@ client.on("interactionCreate", async (interaction) => {
   await handleInteraction(interaction);
 });
 
-// "messageCreate" イベントでメッセージ処理をハンドリング
-client.on("messageCreate", async (message) => {
-  if (message.content.toLowerCase() === "post") {
-    await sendScheduledMessage(client);
-  }
-  if (message.content.toLowerCase() === "send") {
-    await matchUsers(client);
-  }
-  if (message.content.toLowerCase() === "reminder") {
-    await sendReminderMessage(client);
-  }
-  if (message.content.toLowerCase() === "end") {
-    await sendEndTimeMessage(client);
-  }
-});
+// Botを手動で動かしたい時にコメントアウトを解除して使用する
+// client.on("messageCreate", async (message) => {
+//   if (message.content.toLowerCase() === "post") {
+//     await sendScheduledMessage(client);
+//   }
+//   if (message.content.toLowerCase() === "send") {
+//     await matchUsers(client);
+//   }
+//   if (message.content.toLowerCase() === "reminder") {
+//     await sendReminderMessage(client);
+//   }
+//   if (message.content.toLowerCase() === "end") {
+//     await sendEndTimeMessage(client);
+//   }
+// });
 
 // 毎週火・木・日の21時にメッセージを送信
 cron.schedule("0 12 * * 2,4,0", async () => {

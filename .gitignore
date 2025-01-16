@@ -1,6 +1,16 @@
+# 環境変数
+.env
+
+# Node.js
+node_modules/
+npm-debug.log*
+
+# データベースやキャッシュ
+.data/
+
+# Glitch 特有のファイル
 .glitchdotcom.json
 .node-gyp
-node_modules
-.data/
-database/
-.env
+
+# その他
+*.log
