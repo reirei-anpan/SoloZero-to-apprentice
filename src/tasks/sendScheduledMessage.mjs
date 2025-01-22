@@ -2,7 +2,7 @@ import { ButtonBuilder, ButtonStyle, ActionRowBuilder } from "discord.js";
 
 export async function sendScheduledMessage(client) {
   try {
-    const channelId = "1191988459179614231"; // チャンネルID
+    const channelId = "1331597364737216593"; // チャンネルID
     const channel = await client.channels.fetch(channelId);
 
     if (!channel || !channel.isTextBased()) {

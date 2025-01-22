@@ -7,7 +7,7 @@ const PAIRS_PATH = path.resolve("database/pairs.json");
 export async function sendEndTimeMessage(client) {
   try {
     const data = JSON.parse(fs.readFileSync(DB_PATH, "utf8"));
-    const channelId = "1191988459179614231"; // チャンネルID
+    const channelId = "1331597364737216593"; // チャンネルID
     const channel = await client.channels.fetch(channelId);
 
     if (!channel || !channel.isTextBased()) {
